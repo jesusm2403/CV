@@ -1,0 +1,72 @@
+{%extends 'base.html'%}
+{%block title%}Home{%endblock%}
+{%block content%}
+
+<div class="container text-center">
+
+    <div class="container">
+        <img src="{{ url_for('static', filename='images/' + data['images']['profile picture']) }}" class="img-fluid rounded-circle img-thumbnail" alt="profile pictura" style="width: 300px; height: 400px;">
+        <h1>{{data['first name']}} {{data['last name']}}</h1>
+        <h4>{{data['description']['short description']}}</h4>
+    </div>
+    <div class="container">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-action"><b>Email: {{data['contact']['email']}}</b></li>
+            <li class="list-group-item list-group-item-action"><b>Phone: {{data['contact']['phone']}}</b></li>
+            <li class="list-group-item list-group-item-action">
+                
+                <a href="{{url_for('static', filename='pdf/' + data['pdf']['cvpdf']) }}" download class="btn btn-dark   ">Download PDF</a>
+            </li>
+        </ul>
+    </div>
+   
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-4 shadow p-3 mb-5 bg-white rounded">
+            <h2 class="text-center">About me</h2>
+            <ul class="list-group">
+                <li class="list-group-item text-justify">
+                    <p>{{data['description']['long description']}}</p>
+                    <p class="text-center">
+                        <a href="https://www.linkedin.com/in/jesus-francisco-martinez-rodriguez-887079134/">
+                            <img src="{{url_for('static', filename='images/' + data['social media']['linkedin']) }}"  style="height: 70px; width:70px;">
+                        </a>
+                    </p>
+                </li>
+            </ul>        
+        </div>
+
+        <div class="col-4 shadow p-3 mb-5 bg-white rounded">
+            <h2 class="text-center">Work Experience</h2>
+            <ul class="list-group">
+                {% for job in data['work experience'].keys() %}
+                <li class="list-group-item"><b>{{job}}</b>
+                    <ul>
+                        <li class="text-left">Description: {{data['work experience'][job]['description'] }}</li>
+                        <li class="text-left">Period: {{data['work experience'][job]['time period'] }}</li>
+                        <li class="text-left">Contact: {{data['work experience'][job]['contact']}} </li>
+                    </ul>
+                </li>
+                {%endfor%}
+            </ul>
+        </div>
+
+        <div class="col-4 shadow p-3 mb-5 bg-white rounded">
+            <h2 class="text-center">Technical skills</h2>
+            <ul class="list-group">
+                {% for ability in data['skills'].keys() %}
+                <li class="list-group-item"><b>{{ability}}</b>
+                    <ul>
+                        <li class="text-left">{{data['skills'][ability]['tool'] }}</li>
+                    </ul>
+                </li>
+                {%endfor%}
+            </ul>
+
+        </div>
+    </div>    
+</div>
+
+
+{%endblock%}
